@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -41,15 +43,22 @@ public class MainActivity extends AppCompatActivity {
        listView.setAdapter(timeAdapter);
     }
 
+    private void Init(){
+        timeItemList=new ArrayList<>();
+        timeItemList.add(
+                new TimeItem("Birthday","1998.12.3","lizi",R.drawable.item_new));
+
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 1:
-                if (requestCode == RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     String returnedTitle = data.getStringExtra("title");
                     String returnedDescription = data.getStringExtra("description");
-                    getTimeItemList().add(new TimeItem(returnedTitle, "1997.09.01", returnedDescription,
+                    String returnedDate;
+                    getTimeItemList().add(0,new TimeItem(returnedTitle, "1997.09.01", returnedDescription,
                             R.drawable.item_new));
                     timeAdapter.notifyDataSetChanged();
                 }
@@ -58,12 +67,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    private void Init(){
-        timeItemList=new ArrayList<>();
-     timeItemList.add(
-             new TimeItem("Birthday","1998.12.3","lizi",R.drawable.item_new));
 
-    }
 
     public ArrayList<TimeItem> getTimeItemList(){return timeItemList;}
 }

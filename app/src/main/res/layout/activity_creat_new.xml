@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginLeft="44dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="70dp"
         android:text="Description"
         android:textColor="@color/colorWhite"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,19 +74,28 @@
         android:layout_height="41dp"
         android:layout_marginStart="44dp"
         android:layout_marginLeft="44dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="Note,goals,moto..."
-        android:textColorHint="@color/colorWhite"
         android:inputType="textPersonName"
         android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_title" />
 
     <FrameLayout
         android:layout_width="414dp"
         android:layout_height="473dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_description"
-        android:background="@color/colorWhite"/>
+
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_description">
+
+        <ListView
+            android:id="@+id/list_view_choose"
+            android:layout_width="match_parent"
+            android:layout_height="529dp"
+            android:divider="#CCCCCC"/>
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
