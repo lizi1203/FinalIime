@@ -42,7 +42,7 @@ public class TimeAdapter extends ArrayAdapter<TimeItem> {
                 Intent intent = new Intent(getContext(), TimeAllActivity.class);
                 intent.putExtra("Title", timeItem.getTitle());
                 intent.putExtra("Date", timeItem.getDate());
-                getContext().startActivity(intent);
+                ((Activity)getContext()).startActivityForResult(intent,2);
             }
         });
 

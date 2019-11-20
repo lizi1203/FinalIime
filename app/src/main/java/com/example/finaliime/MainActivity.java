@@ -63,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
                     timeAdapter.notifyDataSetChanged();
                 }
                 break;
+            case 2:
+            if (resultCode == RESULT_OK) {
+                timeItemList.remove(0);
+                timeAdapter.notifyDataSetChanged();
+            }
+            break;
             default:
         }
 

@@ -56,7 +56,8 @@ public class TimeAllActivity extends AppCompatActivity {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                            Intent intent1=new Intent();
+                                setResult(RESULT_OK, intent1);
                             TimeAllActivity.this.finish();
                             }
                         })
