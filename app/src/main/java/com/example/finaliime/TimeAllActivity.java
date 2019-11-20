@@ -39,6 +39,7 @@ public class TimeAllActivity extends AppCompatActivity {
         Intent intent=getIntent();
         String title=intent.getStringExtra("Title");
         String date=intent.getStringExtra("Date");
+        final int position=intent.getIntExtra("position", 0);
         titleTextView2.setText(title);
         button.setText(date);
         buttonReturn.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +58,7 @@ public class TimeAllActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             Intent intent1=new Intent();
+                            intent1.putExtra("position", position);
                                 setResult(RESULT_OK, intent1);
                             TimeAllActivity.this.finish();
                             }

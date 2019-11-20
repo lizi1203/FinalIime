@@ -13,16 +13,18 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<TimeItem> timeItemList;
+    private ArrayList<TimeItem> timeItemList=new ArrayList<>();;
     Button button;
     ListView listView;
     TimeAdapter timeAdapter;
-
-
+    DataFileSource dataFileSource;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +45,23 @@ public class MainActivity extends AppCompatActivity {
        listView.setAdapter(timeAdapter);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dataFileSource.save();
+    }
+
     private void Init(){
-        timeItemList=new ArrayList<>();
-        timeItemList.add(
-                new TimeItem("Birthday","1998.12.3","lizi",R.drawable.item_new));
+        dataFileSource=new DataFileSource(this);
+        timeItemList=dataFileSource.load();
+        if(timeItemList.size()==0) {
+            try {
+                timeItemList.add(
+                        new TimeItem("Birthday", sdf.parse("1998-12-03"), "lizi", R.drawable.item_new));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
     @Override
@@ -58,14 +73,19 @@ public class MainActivity extends AppCompatActivity {
                     String returnedTitle = data.getStringExtra("title");
                     String returnedDescription = data.getStringExtra("description");
                     String returnedDate;
-                    getTimeItemList().add(0,new TimeItem(returnedTitle, "1997.09.01", returnedDescription,
-                            R.drawable.item_new));
+                    try {
+                        getTimeItemList().add(0,new TimeItem(returnedTitle, sdf.parse("1997-09-01"), returnedDescription,
+                                R.drawable.item_new));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     timeAdapter.notifyDataSetChanged();
                 }
                 break;
             case 2:
             if (resultCode == RESULT_OK) {
-                timeItemList.remove(0);
+                int position=data.getIntExtra("position", 0);
+                timeItemList.remove(position);
                 timeAdapter.notifyDataSetChanged();
             }
             break;
