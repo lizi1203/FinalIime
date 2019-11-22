@@ -21,7 +21,7 @@ public class TimeAllActivity extends AppCompatActivity {
     Button buttonShare;
     Button buttonUpdate;
     Context context=this;
-    TextView titleTextView2;
+    TextView titleTextView2,descriptionTextView2;
     Button button;
 
     @Override
@@ -34,13 +34,16 @@ public class TimeAllActivity extends AppCompatActivity {
         buttonShare=findViewById(R.id.button_share);
         buttonUpdate=findViewById(R.id.button_update);
         titleTextView2=findViewById(R.id.title_text_view2);
+        descriptionTextView2=findViewById(R.id.description_text_view2);
         button=findViewById(R.id.button);
 
-        Intent intent=getIntent();
-        String title=intent.getStringExtra("Title");
+        final Intent intent=getIntent();
+        final String title=intent.getStringExtra("Title");
         String date=intent.getStringExtra("Date");
+        final String description=intent.getStringExtra("Description");
         final int position=intent.getIntExtra("position", 0);
         titleTextView2.setText(title);
+        descriptionTextView2.setText(description);
         button.setText(date);
         buttonReturn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +76,14 @@ public class TimeAllActivity extends AppCompatActivity {
             }
         });
 
-
+       buttonUpdate.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent2=new Intent(TimeAllActivity.this,CreatNewActivity.class);
+               intent2.putExtra("title", title);
+               intent2.putExtra("description", description);
+               startActivity(intent2);
+           }
+       });
     }
 }

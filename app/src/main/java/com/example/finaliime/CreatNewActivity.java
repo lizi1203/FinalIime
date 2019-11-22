@@ -23,8 +23,8 @@ public class CreatNewActivity extends AppCompatActivity {
     EditText editTitle;
     EditText editDescription;
     ChooseAdapter chooseAdapter;
-    TextView textViewtitle;
-    TextView textViewdescription;
+    EditText editTextTitle;
+    EditText editTextDescription;
     ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +35,21 @@ public class CreatNewActivity extends AppCompatActivity {
         editTitle=findViewById(R.id.edit_text_title);
         editDescription=findViewById(R.id.edit_text_description);
         listView=findViewById(R.id.list_view_choose);
-        textViewtitle=findViewById(R.id.title2);
-        textViewdescription=findViewById(R.id.description2);
+        editTitle=findViewById(R.id.edit_text_title);
+        editDescription=findViewById(R.id.edit_text_description);
         imageView=findViewById(R.id.image2);
 
         Init();
+        Intent intent=getIntent();
+        String title=intent.getStringExtra("title");
+        String description=intent.getStringExtra("description");
+        if(title!=null) {
+            editTitle.setText(title);
+        }
+        if(description!=null) {
+            editDescription.setText(description);
+        }
+
         chooseAdapter = new ChooseAdapter(CreatNewActivity.this, R.layout.choose_item, chooseItems);
         listView.setAdapter(chooseAdapter);
 
@@ -69,7 +79,7 @@ public class CreatNewActivity extends AppCompatActivity {
       chooseItems=new ArrayList<>();
       chooseItems.add(new ChooseItem("Date  ", "Long press to use calendar",
               R.drawable.calendar_icon));
-      chooseItems.add(new ChooseItem("Period"," None                      ",R.drawable.period_icon));
+      chooseItems.add(new ChooseItem("Period","None                      ",R.drawable.period_icon));
       chooseItems.add(new ChooseItem("Image ","                          ",R.drawable.image_icon));
       chooseItems.add(new ChooseItem("Stick ","                          ",R.drawable.stick_icon));
     }

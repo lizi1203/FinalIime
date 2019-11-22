@@ -16,18 +16,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
 public class TimeAdapter extends ArrayAdapter<TimeItem> {
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM  dd,yyyy", Locale.ENGLISH);
     // HH:mm:ss//获取当前时间
     Date date = new Date(System.currentTimeMillis());
-
+    int count;
 
     public TimeAdapter(@NonNull Context context, int resource, @NonNull ArrayList<TimeItem> objects) {
         super(context, resource, objects);
@@ -39,9 +41,14 @@ public class TimeAdapter extends ArrayAdapter<TimeItem> {
         View oneTimeAllView = LayoutInflater.from(getContext()).inflate(R.layout.time_item, parent, false);
         ((ImageView) oneTimeAllView.findViewById(R.id.image)).setImageResource(timeItem.getImageId());
         ((TextView) oneTimeAllView.findViewById(R.id.title)).setText(timeItem.getTitle());
-        ((TextView) oneTimeAllView.findViewById(R.id.date)).setText(timeItem.getDate().toString());
+        ((TextView) oneTimeAllView.findViewById(R.id.date)).setText((CharSequence) simpleDateFormat.format(timeItem.getDate()));
         ((TextView) oneTimeAllView.findViewById(R.id.description)).setText(timeItem.getDescription());
-        ((TextView)oneTimeAllView.findViewById(R.id.count_text_view)).setText(timeItem.getGapCount(timeItem.getDate(), date)+" DAYS");
+        if((count=timeItem.getGapCount(timeItem.getDate(), date))>0){
+            ((TextView)oneTimeAllView.findViewById(R.id.count_text_view)).setText(count+" DAYS");
+        }else {
+            ((TextView)oneTimeAllView.findViewById(R.id.count_text_view)).setText(count+" DAYS AGO");
+        }
+
         oneTimeAllView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +56,7 @@ public class TimeAdapter extends ArrayAdapter<TimeItem> {
                 Intent intent = new Intent(getContext(), TimeAllActivity.class);
                 intent.putExtra("Title", timeItem.getTitle());
                 intent.putExtra("Date", timeItem.getDate().toString());
+                intent.putExtra("Description", timeItem.getDescription());
                 intent.putExtra("position", position);
                 ((Activity)getContext()).startActivityForResult(intent,2);
             }

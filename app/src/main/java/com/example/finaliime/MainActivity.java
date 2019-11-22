@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         if(timeItemList.size()==0) {
             try {
                 timeItemList.add(
-                        new TimeItem("Birthday", sdf.parse("1998-12-03"), "lizi", R.drawable.item_new));
+                        new TimeItem("Birthday", sdf.parse("2019-12-03"), "lizi", R.drawable.item_new));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     String returnedDescription = data.getStringExtra("description");
                     String returnedDate;
                     try {
-                        getTimeItemList().add(0,new TimeItem(returnedTitle, sdf.parse("1997-09-01"), returnedDescription,
+                        getTimeItemList().add(0,new TimeItem(returnedTitle, sdf.parse("2019-12-03"), returnedDescription,
                                 R.drawable.item_new));
                     } catch (ParseException e) {
                         e.printStackTrace();
